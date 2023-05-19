@@ -46,43 +46,42 @@ function renderToDOM(tasks) {
         <tr>
             <td id="titleData">${task.description}</td>
             <td id="authorData">${task.author}</td>
-            <td><button class="edit" onclick="updateMode(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" >Edit!</button></td>
-            <td><button class="delete" onclick="deleteBooks(this)" data-value="${task.id}">Delete!</button></td>
+            <td><button onclick="putRequest(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" class="${task.isComplete}">I finished it!</button></td>
+            <td><button class="delete" onclick="deleteRequest(this)" data-value="${task.id}">Delete!</button></td>
         </tr>
         `)
     }
+    $('.false').css('background-color', 'red')
+    $('.true').css('background-color', 'green')
 }
 
-// function putRequest(){
-//     //get id to update
-//     $.ajax({
-//         method: 'PUT',
-//         url: `/books/${taskId}`,
-//         // data: {
-//         //     isComplete: 'True'
-//         // }
-//     })
-//     .then(function(response){
-//         getRequest();
-//     })
-//     .catch( function(error) {
-//         alert('Error:', error);
-//     })
-// }
+function putRequest(input){
+    taskId=input.getAttribute("data-value");
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${taskId}`,
+        // data: {
+        //     isComplete: 'True'
+        // }
+    })
+    .then(function(response){
+        getRequest();
+    })
+    .catch( function(error) {
+        alert('Error:', error);
+    })
+}
 
-// function deleteRequest(){
-//     //get id to update
-//     $.ajax({
-//         method: 'DELETE',
-//         url: `/books/${taskId}`,
-//         // data: {
-//         //     isComplete: 'True'
-//         // }
-//     })
-//     .then(function(response){
-//         getRequest();
-//     })
-//     .catch( function(error) {
-//         alert('Error:', error);
-//     })
-// }
+function deleteRequest(input){
+    taskId=input.getAttribute("data-value");
+    $.ajax({
+        method: 'DELETE',
+        url: `/tasks/${taskId}`
+    })
+    .then(function(response){
+        getRequest();
+    })
+    .catch( function(error) {
+        alert('Error:', error);
+    })
+}
