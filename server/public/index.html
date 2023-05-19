@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Koalla Holla</title>
+    <script src="vendors/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="scripts/client.js" charset="utf-8"></script>
+    <script src="vendors/jquery-3.3.1.min.js" rel="jquery-3"></script>
+    <link rel="stylesheet" href="views/styles.css">
+  </head>
+  <body>
+    <section id="addTask">
+      <h2>Add Task</h2>
+      <input type="text" id="taskInput" value="" placeholder="Task">
+      <input type="text" id="authorInput" value="" placeholder="Author">
+      <button type="button" id="taskBtn">Add Task</button>
+    </section>
+    <section>
+      <h2>All Tasks</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Author</th>
+            <th>Completed?</th>
+            <th>Delete?</th>
+          </tr>
+        </thead>
+        <tbody id="taskTable">
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
