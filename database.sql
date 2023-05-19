@@ -1,3 +1,4 @@
+--table creation code for Postico
 CREATE TABLE "tasks" (
 	"id" SERIAL PRIMARY KEY,
 	"description" VARCHAR (400) NOT NULL,

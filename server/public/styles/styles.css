@@ -1,0 +1,16 @@
+th {
+    margin: 4px;
+    padding: 10px;
+}
+
+button {
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    display: block;
+}
+
+td {
+    padding: 5px;
+    margin: 3px;
+}
