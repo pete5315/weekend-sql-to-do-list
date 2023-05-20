@@ -54,3 +54,7 @@ button.delete:hover {
     color: white;
     transition: 0.7s;
 }
+
+.horizontal {
+    flex-direction: row;
+}

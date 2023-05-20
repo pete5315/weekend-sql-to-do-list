@@ -8,7 +8,7 @@ router.post('/',  (req, res) => {
     let newTask = req.body;
     console.log(`Adding task`, newTask);
     //set up query text to send to SQL
-    let queryText = `INSERT INTO "tasks" ("description", "author")  VALUES ($1, $2);`;
+    let queryText = `INSERT INTO "tasks" ("description", "author", "timeCompleted")  VALUES ($1, $2, CURRENT_DATE);`;
     //send the query to SQL
     pool.query(queryText, [newTask.description, newTask.author])
     //if SQL doesn't error
@@ -46,7 +46,10 @@ router.put('/:id', (req, res) => {
     let reqIsComplete = req.body.isComplete;
     console.log('Change request for id', reqIsComplete,reqId);
     //set up query text to send to SQL
-    let sqlText = `UPDATE "tasks" SET "isComplete" = $1 WHERE id=$2;`;
+    let sqlText = `UPDATE "tasks" SET "isComplete" = $1, "timeCompleted" = null WHERE id=$2;`;
+    if (reqIsComplete=='true') {
+        sqlText = `UPDATE "tasks" SET "isComplete" = $1, "timeCompleted" = CURRENT_DATE WHERE id=$2;`;
+    }
     //send the query to SQL
     pool.query(sqlText, [reqIsComplete,reqId])
     //if SQL doesn't error

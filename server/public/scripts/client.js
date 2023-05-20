@@ -1,10 +1,14 @@
 //run the onReady function when the page loads
 $(onReady);
 
+//global variable
+let reverse=false;
+
 //onReady function for pageload functions
 function onReady() {
     //event listener for adding a task
     $('#taskBtn').on('click', addTask);
+    $('#reverse').on('click',reverseOrder);
     //render any existing data to the database
     getRequest();
 }
@@ -56,6 +60,16 @@ function getRequest() {
 
 //this is the render function--it will put our table information on the DOM
 function renderToDOM(tasks) {
+    //if the reverse function had been called
+    console.log(tasks);
+    if(reverse===true) {
+        let task=[];
+        for (let tas of tasks) {
+            task.unshift(tas);
+        }
+        tasks=task;
+    }
+    console.log(tasks);    
     //vacate the current table so we can re-add everything that remains
     $('#taskTable').empty();
     //for loop to add each row individually
@@ -68,8 +82,9 @@ function renderToDOM(tasks) {
             <tr>
                 <td id="titleData">${task.description}</td>
                 <td id="authorData">${task.author}</td>
-                <td><button onclick="putRequest(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" class="${task.isComplete}">I finished it!</button></td>
-                <td><button class="delete" onclick="deleteRequest(this)" data-value="${task.id}">Delete!</button></td>
+                <td id="authorData">${String(task.timeCompleted).slice(5,10)}</td>
+                <td><button onclick="putRequest(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" class="${task.isComplete} btn btn-success">I finished it!</button></td>
+                <td><button class="delete btn btn-danger" onclick="deleteRequest(this)" data-value="${task.id}">Delete!</button></td>
             </tr>
             `)
         } else {
@@ -77,8 +92,9 @@ function renderToDOM(tasks) {
             <tr>
                 <td id="titleData">${task.description}</td>
                 <td id="authorData">${task.author}</td>
-                <td><button onclick="putRequest(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" class="${task.isComplete}">Oops, I actually didn't finish it</button></td>
-                <td><button class="delete" onclick="deleteRequest(this)" data-value="${task.id}">Delete!</button></td>
+                <td id="authorData">${String(task.timeCompleted).slice(5,10)}</td>
+                <td><button onclick="putRequest(this)" data-value="${task.id}" title-name="${task.description}" author-name="${task.author}" class="${task.isComplete} btn btn-warning">Oops, I actually didn't finish it</button></td>
+                <td><button class="delete btn btn-danger" onclick="deleteRequest(this)" data-value="${task.id}">Delete!</button></td>
             </tr>
             `)
         }
@@ -92,9 +108,10 @@ function putRequest(input){ //input is the jquery this from the button
     //grab the data-value from the button that was clicked
     taskId=input.getAttribute("data-value");
     //the isComplete status is being stored in the class of the button
-    let isComplete=input.getAttribute("class");
+    let isComplete=input.getAttribute("class").slice(0,5).trim()
+    console.log(isComplete)
     //when we click the button, we want to switch the boolean to its opposite value
-    if (isComplete==='true') {
+    if (isComplete==="true") {
         isComplete=false;
     }
     else {
@@ -120,19 +137,46 @@ function putRequest(input){ //input is the jquery this from the button
 
 //the delete request function will let us remove tasks from the database
 function deleteRequest(input){
-    //grab the data-value from the button that was clicked
-    taskId=input.getAttribute("data-value");
-    //ajax lets the client talk to the server
-    $.ajax({
-        //delete method will delete a row from the server
-        method: 'DELETE',
-        //url includes the taskId so the server knows which row to delete
-        url: `/tasks/${taskId}`
+    swal({
+        title: "Are you sure?",
+        text: "Like, really sure",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
     })
-    .then(function(response){ //if it's successful, we'll need to get the new database from the server
-        getRequest();
-    })
-    .catch( function(error) { //if the server fails, we want to know why
-        alert('Error:', error);
-    })
+    .then((willDelete) => {
+        if (willDelete) {
+            //grab the data-value from the button that was clicked
+            taskId=input.getAttribute("data-value");
+            //ajax lets the client talk to the server
+            $.ajax({
+                //delete method will delete a row from the server
+                method: 'DELETE',
+                //url includes the taskId so the server knows which row to delete
+                url: `/tasks/${taskId}`
+            })
+            .then(function(response){ //if it's successful, we'll need to get the new database from the server
+                getRequest();
+            })
+            .catch( function(error) { //if the server fails, we want to know why
+                alert('Error:', error);
+            })
+            swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+            });
+        } else {
+            swal("Stay safe out there.");
+        }
+    });
+
+}
+
+function reverseOrder() {
+    if (reverse===false) {
+        reverse=true;
+    }
+    else {
+        reverse=false;
+    }
+    getRequest();
 }

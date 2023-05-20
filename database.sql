@@ -6,4 +6,4 @@ CREATE TABLE "tasks" (
     "isComplete" BOOLEAN DEFAULT FALSE
 );
 
-ALTER TABLE "tasks" ADD COLUMN "timeCompleted" TIMESTAMP;
+ALTER TABLE "tasks" ADD COLUMN "timeCompleted" DATE;
