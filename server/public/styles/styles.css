@@ -14,3 +14,43 @@ td {
     padding: 5px;
     margin: 3px;
 }
+
+body {
+    background-color: rgb(202, 219, 233);
+    font-family: Gill Sans, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#addTask {
+    text-align: center;
+}
+
+button {
+    background-color: rgba(216, 174, 182, 0.701);
+    border-radius: 4px;
+
+}
+
+input {
+    background-color: rgb(215, 221, 227)
+}
+
+button.false:hover {
+    background-color: lightgreen;
+    color: white;
+    transition: 0.7s;
+}
+
+button.true:hover {
+    background-color:lightcoral;
+    color: white;
+    transition: 0.7s;
+}
+
+button.delete:hover {
+    background-color:rgb(110, 110, 110);
+    color: white;
+    transition: 0.7s;
+}

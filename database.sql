@@ -5,3 +5,5 @@ CREATE TABLE "tasks" (
 	"author" VARCHAR (100) NOT NULL,
     "isComplete" BOOLEAN DEFAULT FALSE
 );
+
+ALTER TABLE "tasks" ADD COLUMN "timeCompleted" TIMESTAMP;

@@ -25,7 +25,7 @@ router.post('/',  (req, res) => {
 //route to get tasks from database
 router.get('/', (req, res) => {
     //set up query text to send to SQL
-    let queryText = 'SELECT * FROM "tasks" ORDER BY "author";';
+    let queryText = 'SELECT * FROM "tasks" ORDER BY "isComplete", "author";';
     //send the query to SQL
     pool.query(queryText)
     //if SQL doesn't error

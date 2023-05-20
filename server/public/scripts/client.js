@@ -30,6 +30,7 @@ function postRequest(taskInfo) {
         data: taskInfo,
         }).then(function(response) {
             console.log('Response from server.', response);
+            $('input').val('');
             getRequest();
         }).catch(function(error) {
             console.log('Error in POST', error)
@@ -83,10 +84,9 @@ function renderToDOM(tasks) {
         }
     }
     //if the isComplete property is false/true, make the table row red/green correspondingly
-    $('.false').closest('tr').css('background-color', 'lightcoral')
-    $('.true').closest('tr').css('background-color', 'lightgreen')
+    $('.false').closest('tr').css('background-color', 'lightcoral').css('color', 'navy');
+    $('.true').closest('tr').css('background-color', 'lightgreen').css('color', 'navy');
 }
-
 //the put request function will update the isComplete property for one row of the table
 function putRequest(input){ //input is the jquery this from the button
     //grab the data-value from the button that was clicked
