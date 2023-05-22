@@ -14,7 +14,7 @@ else {
     pool = new pg.Pool({ //the port has to correspond to what we're using in Postico/postgreSQL
         host: 'localhost',
         port: 5432,
-        database: 'tasks', 
+        database: 'weekend-to-do-app', 
     });
 }
 
